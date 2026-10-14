@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f7f4">
+    <meta name="description" content="Create, save, and print useful QR codes. Everything stays on your device.">
+    <title>Glyph — your QR code studio</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Glyph QR Studio home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M5 5h9v9H5zM18 5h9v9h-9zM5 18h9v9H5zM19 19h3v3h-3zM24 18h3v3h-3zM19 24h3v3h-3zM24 24h3v3h-3z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 8h3v3H8zM21 8h3v3h-3zM8 21h3v3H8z" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-copy"><strong>glyph</strong><span>YOUR LOCAL QR STUDIO</span></span>
+        </a>
+
+        <button id="newCodeButton" class="new-code-button" type="button">
+          <span class="plus-icon" aria-hidden="true">+</span> Make a new code
+          <span class="keyboard-hint">N</span>
+        </button>
+
+        <div class="sidebar-label">CREATE SOMETHING</div>
+        <nav id="typeNavigation" class="type-navigation" aria-label="Choose a QR code type"></nav>
+
+        <button id="libraryToggle" class="saved-heading" type="button" aria-expanded="false" aria-controls="savedList">
+          <span class="sidebar-label">YOUR LIBRARY</span>
+          <span id="savedCount" class="saved-count">0</span>
+          <svg class="library-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="savedList" class="saved-list" aria-live="polite" hidden></div>
+        <div class="sidebar-bottom">
+          <span class="local-lock" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 9V6a3 3 0 0 1 6 0v3m-3 3v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <span><strong>Just between us.</strong><br>Saved on this device, never uploaded.</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb"><span>YOUR SPACE</span><span class="breadcrumb-slash">/</span><strong>QR Studio</strong></div>
+          <div class="local-badge"><span class="online-dot"></span> LOCAL &amp; PRIVATE</div>
+        </header>
+
+        <div class="page-body">
+          <section class="welcome-row">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-star">✳</span> LITTLE CODES, BIG POSSIBILITIES</div>
+              <h1>Your ideas,<br class="mobile-break"> one scan away.</h1>
+              <p class="welcome-copy">Make a QR code for pretty much anything. Keep it, download it, share it.</p>
+                </div>
+              </section>
+
+          <section class="quick-start" aria-label="Quick start suggestions">
+            <span class="quick-label">A place to start</span>
+            <button class="suggestion-chip" type="button" data-example="website"><span class="chip-dot chip-lilac"></span> Your website</button>
+            <button class="suggestion-chip" type="button" data-example="wifi"><span class="chip-dot chip-mint"></span> Guest Wi-Fi</button>
+            <button class="suggestion-chip" type="button" data-example="payment"><span class="chip-dot chip-peach"></span> A payment link</button>
+          </section>
+
+          <div class="studio-grid">
+            <section class="editor-card" aria-labelledby="editorHeading">
+              <div class="card-heading">
+                <div>
+                  <span class="step-label"><span class="step-number">01</span> THE GOOD STUFF</span>
+                  <h2 id="editorHeading">Make it yours</h2>
+                </div>
+                <span id="typePill" class="type-pill"></span>
+              </div>
+              <form id="generatorForm" novalidate>
+                <div id="fields" class="fields"></div>
+                <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+                <div class="name-field">
+                  <label for="codeName">Give your code a name <span>OPTIONAL</span></label>
+                  <input id="codeName" name="codeName" type="text" maxlength="80" placeholder="A name you'll remember">
+                </div>
+              </form>
+              <div class="editor-footnote">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 9v4m0-7h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span>Your information stays right here on your device.</span>
+              </div>
+            </section>
+
+            <section class="preview-card" aria-labelledby="previewHeading">
+              <div class="preview-topline">
+                <span class="step-label"><span class="step-number">02</span> THE REVEAL</span>
+                <button id="moreButton" class="icon-button" type="button" aria-label="More options" title="More options" aria-expanded="false">
+                  <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><circle cx="4" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="16" cy="10" r="1.6"/></svg>
+                </button>
+                <div id="moreMenu" class="more-menu" hidden>
+                  <button id="copyButton" type="button">
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M13 6V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.5"/></svg>
+                    Copy QR image
+                  </button>
+                  <button id="deleteButton" type="button" class="delete-option" hidden>
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 6h12m-10 0 .7 10h6.6L14 6M8 6V4h4v2m-2 3v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Remove from library
+                  </button>
+                </div>
+              </div>
+              <h2 id="previewHeading" class="sr-only">Your QR code preview</h2>
+              <div class="qr-stage">
+                <div class="qr-decoration qr-decoration-one"></div>
+                <div class="qr-decoration qr-decoration-two"></div>
+                <div class="qr-paper">
+                  <div id="qrLoading" class="qr-placeholder">
+                    <span class="placeholder-symbol" aria-hidden="true">
+                      <svg viewBox="0 0 48 48" fill="none"><path d="M8 8h14v14H8zM26 8h14v14H26zM8 26h14v14H8zM28 28h4v4h-4zM36 26h4v4h-4zM28 36h4v4h-4zM36 36h4v4h-4z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M12 12h6v6h-6zM30 12h6v6h-6zM12 30h6v6h-6z" fill="currentColor"/></svg>
+                    </span>
+                    <span>Your QR will<br>appear right here</span>
+                  </div>
+                  <img id="qrImage" class="qr-image" alt="Your generated QR code" hidden>
+                </div>
+                <span class="qr-sticker sticker-top">SCAN ME!</span>
+              </div>
+              <div class="qr-caption">
+                <div class="qr-title-row"><div id="qrTitle" class="qr-title">A brand-new idea</div><span class="live-tag"><span class="live-dot"></span> LIVE</span></div>
+                <div id="qrSummary" class="qr-summary">Enter some details and watch the magic happen.</div>
+              </div>
+              <div class="action-buttons">
+                <button id="downloadButton" class="primary-button" type="button" disabled>
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 14v2.5c0 .8.7 1.5 1.5 1.5h9c.8 0 1.5-.7 1.5-1.5V14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Download PNG
+                </button>
+              </div>
+              <button id="saveButton" class="save-button" type="button" disabled>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M15 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8l4 4v8a2 2 0 0 1-2 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 3v4h6V3m-6 14v-6h6v6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                <span id="saveButtonLabel">Save to my library</span>
+              </button>
+            </section>
+          </div>
+
+          <footer class="page-footer">
+            <span>Made for all the things you want to share.</span>
+          </footer>
+        </div>
+      </main>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
